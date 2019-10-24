@@ -2,8 +2,14 @@
 #image: https://github.com/gitpod-io/workspace-images/blob/master/flutter/Dockerfile
 # Command to start on workspace startup (optional)
 tasks:
-  - init: yarn install
-    command: yarn build
+  - curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list && \
+    apt-get update && \
+    apt-get -y install build-essential dart libkrb5-dev gcc make gradle android-tools-adb android-tools-fastboot && \
+    apt-get clean && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/*;
 # Ports to expose on workspace startup (optional)
 ports:
   - port: 8000
